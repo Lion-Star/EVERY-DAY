@@ -1,0 +1,20 @@
+{
+    "name": "day3",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "bin": {
+        "htser": "./bin/index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "ejs": "^2.7.1",
+        "express": "^4.17.1",
+        "jxy-server": "^1.0.0"
+    }
+}
