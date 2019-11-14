@@ -32,8 +32,31 @@ router.get("/api/list", async(ctx, next) => {
 
 //查
 router.get("/api/search", async(ctx, next) => {
-    let data = await ctx.mysql.query("select * from userlist")
-    ctx.body = data
+    try {
+        let total = await ctx.mysql.query("select count(*) from userlist")
+
+        console.log(ctx.query);
+
+        let { pageNum = 1, limit = 2 } = ctx.query
+
+
+        let startIndex = (pageNum - 1) * limit
+
+
+        let data = await ctx.mysql.query(`select * from userlist limit ${startIndex},${limit}`)
+
+
+        ctx.body = {
+            code: 1,
+            total: total[0]["count(*)"],
+            data: data
+        }
+    } catch (e) {
+        ctx.body = {
+            code: 0,
+            msg: e
+        }
+    }
 })
 
 //删
