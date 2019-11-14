@@ -23,7 +23,7 @@
                   </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                  <el-button @click="dialogFormVisible = false">取 消</el-button>
+                  <el-button @click="dialogFormVisible = false;form={}">取 消</el-button>
                   <el-button type="primary" @click="sure">确 定</el-button>
                 </div>
               </el-dialog>
@@ -114,6 +114,7 @@ export default {
   },
   methods: {
     sure(){
+      
       if(this.type===0){
           this.$http.post("/api/login",{...this.form})
           this.$message({
@@ -121,9 +122,8 @@ export default {
               type: 'success'
             });
           this.dialogFormVisible = false
-      }else{
-        console.log(this.form);
-        
+          this.reset()
+      }else{  
         this.$http.post("/api/edit",{...this.form}).then(res=>{
           if(res.data.code===1){
             this.$message({
@@ -135,9 +135,9 @@ export default {
            this.$message.error('修改失败');
           }
         })
-      
+        this.reset()
       }
-    
+     
     },
     getData(){    
       this.$http.get("/api/search",{params:{pageNum:this.pageNum,limit:this.limit}}).then(res =>{
@@ -214,7 +214,7 @@ export default {
         }
       })
     },
-    handleCurrentChange(val) {   //
+    handleCurrentChange(val) {   
       this.$http.get("/api/search",{params:{pageNum:val,limit:this.limit}}).then(res =>{
         if(res.data.code === 0){
           console.log("defeat");
@@ -223,7 +223,12 @@ export default {
           this.total=res.data.total
         }
       })
-    }
+    },
+    reset(){
+    this.form={}
+    console.log(this.form);
+    
+  },
   },
   
   created(){
