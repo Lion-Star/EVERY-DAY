@@ -5,11 +5,8 @@
             <el-aside width="300px">Aside</el-aside>
           <el-main>
             <div>
-              
-
               <!-- Form -->
               <el-button type="text" @click="dialogFormVisible = true; type=0;">添加用户信息</el-button>
-
               <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
                 <el-form :model="form">
                   <el-form-item label="user" :label-width="formLabelWidth">
@@ -143,7 +140,7 @@ export default {
     
     },
     getData(){    
-      this.$http.get("/api/search",{pageNum:this.pageNum,limit:this.limit}).then(res =>{
+      this.$http.get("/api/search",{params:{pageNum:this.pageNum,limit:this.limit}}).then(res =>{
         if(res.data.code === 0){
           console.log("defeat");
         }else{
@@ -166,7 +163,7 @@ export default {
         id:row.id
       }
     },
-    handleDelete(index, row) {
+    handleDelete(index, row) {   //删除
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -178,13 +175,17 @@ export default {
                 type: 'success',
                 message: '删除成功!'
               });
-              this.$http.get("/api/search",{pageNum:this.pageNum,limit:this.limit}).then(res =>{
+              console.log(this.limit);
+              
+              this.$http.get("/api/search",{params:{pageNum:this.pageNum,limit:this.limit}}).then(res =>{
                 if(res.data.code === 0){
                   console.log("defeat");
                 }else{
                   this.tableData = res.data.data
                   this.total=res.data.total
                 }
+                console.log( this.tableData);
+                
               })
             }else{
               console.log("失败");
@@ -213,7 +214,7 @@ export default {
         }
       })
     },
-    handleCurrentChange(val) { 
+    handleCurrentChange(val) {   //
       this.$http.get("/api/search",{params:{pageNum:val,limit:this.limit}}).then(res =>{
         if(res.data.code === 0){
           console.log("defeat");

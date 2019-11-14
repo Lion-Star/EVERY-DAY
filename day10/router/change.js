@@ -42,9 +42,11 @@ router.get("/api/search", async(ctx, next) => {
 
         let startIndex = (pageNum - 1) * limit
 
+        console.log(startIndex, limit);
 
         let data = await ctx.mysql.query(`select * from userlist limit ${startIndex},${limit}`)
 
+        console.log(data);
 
         ctx.body = {
             code: 1,
