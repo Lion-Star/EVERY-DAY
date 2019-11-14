@@ -39,10 +39,13 @@ router.post("/api/login", async(ctx, next) => {
 //改
 router.post("/api/edit", async(ctx, next) => {
     let { user, pwd, address, phone, id } = ctx.request.body;
+    console.log(user, pwd, address, phone, id);
 
     if (id && user && pwd) {
         try {
             await ctx.mysql.query("update userlist set user=?,pwd=?,address=?,phone=? where id=? ", [user, pwd, address, phone, id])
+            console.log(1);
+
             ctx.body = {
                 code: 1,
                 msg: "修改成功"

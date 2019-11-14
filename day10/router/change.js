@@ -61,8 +61,10 @@ router.get("/api/search", async(ctx, next) => {
 
 //删
 router.get("/api/del", async(ctx, next) => {
+    console.log(ctx.query);
+
     let { id } = ctx.query;
-    console.log(id);
+    console.log("111", id);
 
     if (id || id === 0) {
         try {
